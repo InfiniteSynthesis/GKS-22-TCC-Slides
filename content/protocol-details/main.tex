@@ -1,0 +1,123 @@
+\section{Protocol Details}
+
+\tikzstyle{block} = [rectangle, fill=maincolor!80, text=backgroundcolor, minimum height=1cm, minimum width=2cm]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Timekeeper Protocol
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Timekeeper Protocol} \centering
+    \input{content/protocol-details/protocol-fig}
+
+    \begin{itemize}
+        \item<2-> All events are triggered by parties' local clocks.
+        \item<3-> Parties use 2-for-1 PoW to mine and emit synchronization beacons to sync their local clocks.
+    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A New Timestamp Scheme
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{A New Timestamp Scheme}
+    We extend the timestamp scheme from $\langle time \rangle$ to $\langle interval, time \rangle$.
+
+    \centering \input{content/protocol-details/timestamp-scheme}
+
+    \begin{itemize}
+        \item<2-> Chain should include monotonically increasing timestamps.
+        \item<3-> Recalibration may ``rewind'' local clocks.
+        \item<4-> Easy to distinguish the epoch of blocks mined at the boundary.
+        \item<5-> After setting clocks backwards, it is unreasonable to let honest parties stop mining.
+    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A New Target Recalculation Function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{A New Target Recalculation Function}
+
+    We reverse Bitcoin's target recalculation function.
+    \vspace*{1em}
+
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.45\textwidth}<2-> \centering
+            \emph{Bitcoin's Function} \vspace*{1em}
+        \end{column}
+        \begin{column}{0.45\textwidth}<3-> \centering
+            \emph{Our New Function} \vspace*{1em}
+        \end{column}
+    \end{columns}
+
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.45\textwidth}<2->
+            \input{content/protocol-details/bitcoin-func}
+        \end{column}
+
+        \begin{column}{0.1\textwidth}<3-> \centering
+            \hspace*{.5em}
+            \begin{tikzpicture}
+                \draw[line width = .5em, ->,>=stealth,maincolor] (0, 0) -- (3em, 0);
+            \end{tikzpicture}
+            \vspace*{.2em}
+        \end{column}
+
+        \begin{column}{0.45\textwidth}<3->
+            \input{content/protocol-details/new-func}
+        \end{column}
+    \end{columns}
+
+    \begin{columns}[c, onlytextwidth]
+        \footnotesize
+        \begin{column}{0.45\textwidth}<2-> \centering
+            \[ Target(K'') = Target(K) * \frac{K'.timestamp - K.timestamp}{\varLambda}. \]
+
+            $\varLambda$ : ideal epoch duration (2 weeks in use)
+        \end{column}
+
+        \begin{column}{0.45\textwidth}<3-> \centering
+            \[ Target(K') = Target(K) * \frac{\varLambda}{(\# \text{ of blocks in } K)}. \]
+
+            $\varLambda$ : ideal \# of blocks an epoch
+        \end{column}
+    \end{columns}
+
+    \vspace{1em}
+    \uncover<4->{\centering \large
+        No timestamp is needed in the new function!
+    }
+
+    \note[item]{Thank the audience for being awake.}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Synchronization Intervals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Synchronization Intervals}
+
+    A synchronization interval consists of 3 phases.
+
+    \centering \input{content/protocol-details/interval-fig}
+
+    \begin{enumerate}
+        \item<2-> \emph{View convergence:} Wait for a consistent view of the last interval.
+        \item<3-> \emph{Mining, inclusion and bookkeeping:} Use \Emph{2-for-1 PoW} to mine and diffuse beacons -- a tiny block that contains local time; honest parties bookkeep the arrival time of beacons.
+        \item<4-> \emph{Beacon Convergence:} Wait for a consistent view of the beacons in current interval.
+    \end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Local Adjustment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Local Adjustment} 
+
+    Parties adjust their clocks locally, based on the arrival time book and the on-chain info, by adding the \emph{median} of their difference to local time.
+    \uncover<2->{
+        \begin{equation*}
+            \mathsf{shift} = \mathsf{median} \{\mathtt{SB}.timestamp - \mathtt{SB}.arrivalTime \mathbin| \mathtt{SB} \text{ in beacon set} \}
+        \end{equation*}
+    }
+
+    \uncover<3->{ \centering \input{content/protocol-details/adjustment-fig} }
+\end{frame}

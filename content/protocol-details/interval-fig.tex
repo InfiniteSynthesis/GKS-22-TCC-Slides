@@ -1,0 +1,25 @@
+\begin{tikzpicture} \footnotesize
+    \node[text = backgroundcolor, inner sep = .1in] (phase1) {View Convergence};
+    \node[fill = maincolor!70, text = backgroundcolor, right = 0cm of phase1, align = center, inner sep = .1in] (phase2) {Beacon mining, inclusion\\and bookkeeping};
+    \node[text = backgroundcolor, right = 0cm of phase2, inner sep = .1in] (phase3) {Beacon Convergence};
+
+    \node[draw = maincolor!70, text = maincolor, inner sep = .1in, anchor = west] at ([xshift = 5pt, yshift=15pt]phase3.east) (randomness) {Fresh randomness};
+
+    \node[draw = maincolor!70, text = maincolor, inner sep = .1in, anchor = west] at ([xshift = 5pt, yshift = -15pt]phase3.east) (adjustment) {Local adjustment};
+
+    \node[draw = maincolor!70, fill = backgroundcolor, isosceles triangle, isosceles triangle apex angle = 120, minimum height = 13pt, rotate = 90, below = 6pt of phase2] (triangle-shadow) {};
+
+    \node[draw = maincolor!70, fill = backgroundcolor, rectangle, rounded corners, text = maincolor, below = 10pt of phase2, align = center, inner sep = .1in] (beacon) {\underline{Additional  ``Beacon Mining'':}\\If $[RO\ output]^R < T$ then diffuse Sync-Beacon.\\Parties mine transactions + beacons.};
+
+    \node[fill = backgroundcolor, isosceles triangle, isosceles triangle apex angle = 120, minimum height = 13pt, rotate = 90, below = 6pt of phase2] (triangle) {};
+
+    \draw[thick,->, >=stealth, line width = 5pt, color=maincolor!70] (beacon.east) -| (adjustment.south);
+
+    \draw[thick, ->, >=stealth, line width = 5pt, color = maincolor!70] ([xshift = -.3in]phase1.west) -- ([xshift = -.05in]phase1.west);
+    \draw[thick, ->, >=stealth, line width = 5pt, color = maincolor!70] ([xshift = 1.25in]phase3.east) -- ([xshift = 1.5in]phase3.east);
+
+    \begin{scope}[on background layer]
+        \node[fit = (phase1) (phase2), rectangle, fill = maincolor!60, inner sep=0pt] (12) {};
+        \node[fit = (phase2) (phase3), rectangle, fill = maincolor!80, inner sep=0pt] (23) {};
+    \end{scope}
+\end{tikzpicture}

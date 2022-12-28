@@ -1,0 +1,44 @@
+% compile with xelatex
+% remove 'handout' to get animations
+
+\documentclass[xetex, unicode, 10pt, aspectratio=169, handout]{beamer}
+\usepackage{theme/style}
+
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage[saturated]{tikzpeople}
+\usepackage{tabularx}
+\usepackage{colortbl}
+
+\title[Permissionless Clock Synchronization with Public Setup]{Permissionless Clock Synchronization\\with Public Setup}
+
+\subtitle{\href{https://ia.cr/2022/1220}{https://ia.cr/2022/1220}}
+
+\author[J. Garay, A. Kiayias, Y. Shen]{Juan Garay\inst{1}, Aggelos Kiayias\inst{2,3}, Yu Shen\inst{2}}
+
+\institute[]{
+    \inst{1}Texas A\&M University
+    \inst{2}University of Edinburgh
+    \inst{3}IOG
+}
+
+\date{TCC 2022}
+
+\input{content/macros}
+
+\begin{document}
+
+\maketitle
+
+\input{content/introduction/main}
+\input{content/informal-solution/main}
+\input{content/model/main}
+\input{content/protocol-details/main}
+\input{content/security-analysis/main}
+\thankyoupage
+
+\begin{frame}[allowframebreaks]{References}
+    \printbibheading[heading = none]
+    \printbibliography
+\end{frame}
+
+\end{document}

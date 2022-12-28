@@ -1,0 +1,11 @@
+\section{Security Analysis}
+
+\begin{frame}
+    \frametitle{Proof Roadmap}
+    Assuming a safe startup, we present an inductive-style proof.
+    \begin{itemize}
+        \item If at the onset, the PoW difficulty is appropriately set and the steady block-generation rate lasts during the whole clock synchronization interval, parties can maintain good skews after they enter the next interval and the shift value they compute to adjust their clocks is properly bounded.
+        \item If good skews and certain time adjustment calculations are maintained during a target recalculation epoch, the block production rate will be properly controlled in the next epoch.
+    \end{itemize}
+
+\end{frame}

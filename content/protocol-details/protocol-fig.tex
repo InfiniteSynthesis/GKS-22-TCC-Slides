@@ -1,0 +1,70 @@
+\tikzstyle{intervalBox} = [draw = maincolor, rectangle, fill = maincolor!60, minimum width = 6em, minimum height = 2em, text = backgroundcolor, inner sep = .6em]
+
+\tikzstyle{epochBox} = [draw = maincolor, rectangle, fill = maincolor!80, minimum width = 24.15em, minimum height = 2em, text = backgroundcolor, inner sep = .6em]
+
+\begin{tikzpicture}
+    \footnotesize
+    \node[intervalBox] (interval1) {Interval 1};
+    \foreach \x [count=\xi from 1] in {2,3,...,8}
+        {
+            \node[intervalBox, anchor = west] at (interval\xi.east) (interval\x) {Interval \x};
+        }
+    \node[intervalBox, minimum width = 1em, anchor = west] at (interval8.east) (interval9) {};
+
+    \foreach \x in {1,2,...,8}
+        {
+            \node[circle, draw = maincolor, fill = backgroundcolor, radius = .5em] at ([yshift = .7em]interval\x.north east) (clock\x) {};
+            \draw[maincolor] (clock\x.center) -- ([yshift = .4em]clock\x.center);
+            \draw[maincolor] (clock\x.center) -- ([xshift = .25em]clock\x.center);
+        }
+
+    \foreach \x [count=\xi from 1] in {1,5}
+        {
+            \node[epochBox, anchor = north west] at ([yshift = -3em]interval\x.south west) (epoch\xi) {Epoch \xi};
+            \draw[maincolor, line width = 1pt] ([yshift = -.2em]epoch\xi.south east) -- ([yshift = -1.2em]epoch\xi.south east);
+            \node[draw=backgroundcolor, line width = .5pt, circle, fill = maincolor, inner sep = .75pt] at ([yshift = -.9em]epoch\xi.south east) (rp11) {};
+            \draw[maincolor, line width = 1pt] ([xshift = -.4em, yshift = -.2em]epoch\xi.south east) -- ([xshift = -.4em, yshift = -1.2em]epoch\xi.south east);
+            \node[draw=backgroundcolor, line width = .5pt, circle, fill = maincolor, inner sep = .75pt] at ([xshift = -.4em, yshift = -.5em]epoch\xi.south east) (rp12) {};
+            \draw[maincolor, line width = 1pt] ([xshift = .4em, yshift = -.2em]epoch\xi.south east) -- ([xshift = .4em, yshift = -1.2em]epoch\xi.south east);
+            \node[draw=backgroundcolor, line width = .5pt, circle, fill = maincolor, inner sep = .75pt] at ([xshift = .4em, yshift = -.7em]epoch\xi.south east) (rp13) {};
+        }
+    \node[epochBox, minimum width = 1em, anchor = north west] at ([yshift = -3em]interval9.south west) (epoch3) {};
+
+    \draw[maincolor] ([yshift = -1.5em]interval1.south west) -- ([xshift = 1.2em, yshift = -1.5em]interval8.south east);
+    \node[fill = maincolor, minimum size = .66em, inner sep = 0] at ([yshift = -1.5em]interval1.south west) (block1) {};
+    \foreach \x [count=\xi from 1] in {.3, .5, .7, .4, .2, .8, .2, .1, .2, .5, .7, .3, .4, .5, .2, 1, 1.3, .3, .3, 1.3, .2, .9, .05, .05, .4, .3, .2, .2, .2, .15, .5, .5, .2, .2, .2, .3, .7, .3, 1.1, .7, .3, .2, .3}
+        {
+            \pgfmathtruncatemacro\xii{\xi + 1}
+            \node[fill = maincolor, minimum size = .66em, inner sep = 0, anchor = west] at ([xshift = \x em]block\xi.east) (block\xii) {};
+        }
+
+    \draw[line width = .5pt, maincolor, densely dotted] (interval1.south west) -- ([yshift = -3em]interval1.south west);
+    \foreach \x in {1,2,...,8}
+        {
+            \draw[line width = .5pt, maincolor, densely dotted] (interval\x.south east) -- ([yshift = -3em]interval\x.south east);
+        }
+
+    \node[fill = backgroundcolor, rectangle, minimum width = 1em, minimum height = 7.5em, anchor = north west] at ([xshift = 1em, yshift = .2em]interval8.north east) (shade) {};
+
+    \node[fill = maincolor, minimum size = .66em, inner sep = 0, anchor = north] at ([yshift = -3em]epoch1.south east) (blockex) {};
+    \node[text = maincolor, anchor = west, inner sep = 0] at ([xshift = .2em]blockex.east) (blockextext) {\tiny Block};
+    \node[circle, draw = maincolor, fill = backgroundcolor, radius = .5em, anchor = west] at ([xshift = .5em]blockextext.east) (clockex) {};
+    \draw[maincolor] (clockex.center) -- ([yshift = .4em]clockex.center);
+    \draw[maincolor] (clockex.center) -- ([xshift = .25em]clockex.center);
+    \node[text = maincolor, anchor = west, inner sep = 0] at ([xshift = .2em]clockex.east) (clockextext) {\tiny Local Clock Adjustment};
+    \draw[maincolor, line width = 1pt] ([xshift = 1em, yshift = .5em]clockextext.east) -- ([xshift = 1em, yshift = -.5em]clockextext.east);
+    \node[draw=backgroundcolor, line width = .5pt, circle, fill = maincolor, inner sep = .75pt] at ([xshift = 1em, yshift = -.2em]clockextext.east) (rpex1) {};
+    \draw[maincolor, line width = 1pt] ([xshift = .6em, yshift = .5em]clockextext.east) -- ([xshift = .6em, yshift = -.5em]clockextext.east);
+    \node[draw=backgroundcolor, line width = .5pt, circle, fill = maincolor, inner sep = .75pt] at ([xshift = .6em, yshift = .2em]clockextext.east) (rpex2) {};
+    \draw[maincolor, line width = 1pt] ([xshift = 1.4em, yshift = .5em]clockextext.east) -- ([xshift = 1.4em, yshift = -.5em]clockextext.east);
+    \node[draw=backgroundcolor, line width = .5pt, circle, fill = maincolor, inner sep = .75pt] at ([xshift = 1.4em, yshift = 0em]clockextext.east) (rpex3) {};
+    \node[text = maincolor, anchor = west, inner sep = 0] at ([xshift = 1.9em]clockextext.east) (retargettext) {\tiny Target Recalculation Point};
+    \node[text = maincolor, anchor = east, inner sep = 0] at ([xshift = -.5em]blockex.west) (epochextext) {\tiny Target Recalculation Epoch};
+    \node[draw = maincolor, rectangle, fill = maincolor!80, minimum size = 1em, inner sep = 0, anchor = east] at ([xshift = -.2em]epochextext.west) (epochex) {};
+    \node[text = maincolor, anchor = east, inner sep = 0] at ([xshift = -.5em]epochex.west) (intervalextext) {\tiny Clock Synchronization Interval};
+    \node[draw = maincolor, rectangle, fill = maincolor!60, minimum size = 1em, inner sep = 0, anchor = east] at ([xshift = -.2em]intervalextext.west) (intervalex) {};
+
+    \begin{scope}[on background layer]
+        \node[fit = (intervalex) (retargettext), draw = maincolor, rectangle, inner sep = .4em] (scope1) {};
+    \end{scope}
+\end{tikzpicture}

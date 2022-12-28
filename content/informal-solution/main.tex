@@ -1,0 +1,90 @@
+\section{Informal Solution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Informal Solution - 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Informal Solution} \centering
+
+    \input{content/informal-solution/protocol-fig}
+
+    \begin{enumerate}
+        \item Parties use \Emph{2-for-1 Proof-of-Work} to mine and diffuse sync-messages containing local time.
+    \end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2-for-1 Proof-of-Work
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{2-for-1 Proof-of-Work}
+
+    2-for-1 PoW \cite[Eurocrypt '15]{GKL15}\footcite{GKL15} is a primitive that composes two or more PoW mining processes with access to a single oracle $H(\cdot)$.
+
+    \uncover<2->{
+        \begin{center} 
+            \input{content/informal-solution/2-for-1-fig}
+        \end{center}
+    }
+
+    \uncover<3->{
+        \begin{tabularx}{\textwidth}{p{0.13\textwidth} X}
+            \Emph{Applications:}
+             & PoW-based BA for honest majority \cite{GKL15}; parallel chains \cite{prism,ledger-combiner};
+            \\
+             & fair reward sharing \cite{fruitchains}.
+        \end{tabularx}
+    }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Informal Solution - 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Informal Solution} \centering
+
+    \input{content/informal-solution/protocol-fig}
+
+    \begin{enumerate} \setcounter{enumi}{1}
+        \item Reach consensus over the set of sync-messages using blockchain periodically.
+    \end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Informal Solution - 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Informal Solution} \centering
+
+    \input{content/informal-solution/protocol-fig}
+
+    \begin{enumerate} \setcounter{enumi}{2}
+        \item Local adjustment --- median of ``delay'' (comparing timestamp recorded with arrival time).
+    \end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Informal Solution - 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Informal Solution} \centering
+
+    \input{content/informal-solution/protocol-fig}
+
+    \begin{enumerate} \setcounter{enumi}{3}
+        \item Newly joint parties can sync with honest parties by passively observing recent adjustments.
+    \end{enumerate}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Informal Solution - 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Informal Solution} \centering
+
+    \input{content/informal-solution/protocol-fig}
+
+    \begin{enumerate} \setcounter{enumi}{4}
+        \item Blockchain can react to party fluctuation by a novel recalculation mechanism.
+    \end{enumerate}
+\end{frame}
