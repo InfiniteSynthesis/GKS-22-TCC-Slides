@@ -1,0 +1,181 @@
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{calc}
+\usepackage[skins, most]{tcolorbox}
+\usetikzlibrary{positioning, shapes, fadings}
+\usepackage[
+  sorting     = nyt,
+  backend     = biber,
+  maxbibnames = 2,
+  doi         = false,
+  isbn        = false,
+  url         = false,
+  eprint      = false,
+  style       = alphabetic,
+  maxnames = 99,
+]{biblatex}
+\usepackage{amsmath}
+\usepackage{cleveref}
+
+\addbibresource{cite.bib} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% load theme
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+  \def\beamer@calltheme#1#2#3{%
+    \def\beamer@themelist{#2}
+    \@for\beamer@themename:=\beamer@themelist\do
+    {\usepackage[{#1}]{\beamer@themelocation/#3\beamer@themename}}}
+  \def\usefolder#1{
+    \def\beamer@themelocation{#1}
+  }
+  \def\beamer@themelocation{}
+
+\usefolder{theme}
+\usetheme{bitterchoc} 
+
+% This is a line which divides the body and the footnotes of the slide.
+\renewcommand\footnoterule{
+  \textcolor{textcolor!40!backgroundcolor}{\rule{0.7\paperwidth}{0.2pt}}
+  \vskip 1mm
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% emphasis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\emph}[1]{{\textbf{#1}}}                  % normal emphasis
+\newcommand{\Emph}[1]{\textbf{\color{maincolor} #1}}    % strong emphasis
+\newcommand{\EMPH}[1]{\textbf{\color{accentcolor} #1}}  % very strong emphasis
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% footcite / animated footcite
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareCiteCommand{\citeauthorfirstlast}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \DeclareNameAlias{labelname}{given-family}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexnames{labelname}}
+     {}%
+   \printnames{labelname}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+\newcommand{\customcite}[1]{\citeauthorfirstlast{#1}. \textcolor{maincolor}{\bf \citetitle{#1}.}}
+
+\renewcommand{\footcite}[1]{
+    \footnotetext{%
+    \tiny
+      \begin{tabular}{@{}p{3em} p{\textwidth - 8em}}%
+        \cite*{#1} & \customcite{#1}%
+      \end{tabular}%
+    }%
+}
+
+\newcommand{\footciteAnimation}[2]{
+    \footnotetext<#2->{%
+    \tiny
+      \begin{tabular}{@{}p{3em} p{\textwidth - 8em}}%
+        \cite*{#1} & \customcite{#1}%
+      \end{tabular}%
+    }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% bullets
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\okitem}{\item[\okmark]}
+\newcommand{\ngitem}{\item[\textcolor{accentcolor}{\ngmark}\hspace{0.1em}]}
+\newcommand{\thusitem}{\item[\thusmark]}
+
+\newcommand*{\okmark}{\tikz[baseline=(char.base)]{\node(char)[]{};
+    \draw [line width = 0.9pt]
+    (0em, 0.25em) --++ (0.25em, -0.25em) --++ (0.55em, 0.55em); 
+  }
+}
+
+\newcommand*{\ngmark}{\tikz[baseline=(char.base)]{\node(char)[]{};
+    \draw [line width = 0.9pt]
+    (0em, 0.6em) --++ (0.6em, -0.6em);
+    \draw [line width = 0.9pt]
+    (0em, 0.0em) --++ (0.6em, 0.6em); 
+  }
+}
+
+\newcommand*{\thusmark}{\tikz[baseline=(char.base)]{\node(char)[]{};
+    \draw [line width = 0.9pt]
+    (0em, 0.35em) --++ (0.8em, 0em);
+    \draw [line width = 0.9pt]
+    (0.45em, 0.0em) --++ (0.35em, 0.35em) --++ (-0.35em, 0.35em); 
+  }
+}
+
+\newcommand*{\filledcircle}{\tikz[baseline=(char.base)]{\node(char)[]{};
+    \fill [maincolor!80] (0em, 0.35em) circle (0.4em); 
+  }
+}
+
+\newcommand*{\ocircle}{\tikz[baseline=(char.base)]{\node(char)[]{};
+    \draw [line width = 0.7pt]
+    (0em, 0.35em) circle (0.4em); 
+  }
+}
+
+\newcommand*\circled[1]{
+  \scalebox{0.70}{\raisebox{0.15em}{\tikz[baseline=(char.base)]{
+        \node(char)[shape = circle,
+          draw = none,
+          inner sep = 0.4em,
+          color = backgroundcolor,
+          fill = maincolor
+        ]{#1};
+    }}
+  }
+}
+
+\newcommand*\ocircled[1]{
+  \scalebox{0.65}{\raisebox{0.15em}{\tikz[baseline=(char.base)]{
+        \node(char)[shape = circle,%
+          draw,%
+          inner sep  = 0.4em,%
+          color      = maincolor,%
+          draw       = maincolor,%
+          line width = 0.6pt%
+        ]{#1};}}}
+}
+
+\setbeamertemplate{enumerate item}{\protect{\circled{\arabic{enumi}}}\hspace{-0.4em}}
+\setbeamertemplate{enumerate subitem}{\protect{\ocircled{\arabic{enumii}}}}
+\setbeamertemplate{itemize item}{\filledcircle}
+\setbeamertemplate{itemize subitem}{\ocircle}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% section / subsection
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginSection[]{{
+    \setbeamertemplate{headline}{}%
+    \begin{frame}
+      \tableofcontents[
+        currentsection,
+        sectionstyle=show/shaded,
+        subsectionstyle=hide
+      ]
+    \end{frame}
+}}
+
+\AtBeginSubsection[]
+{{
+    \setbeamertemplate{headline}{}%
+    \begin{frame}
+      \tableofcontents[
+        currentsection,
+        sectionstyle=show/shaded,
+        subsectionstyle=show/shaded/hide
+      ]
+    \end{frame}
+}}
+
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
