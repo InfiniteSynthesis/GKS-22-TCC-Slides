@@ -1,0 +1,28 @@
+\begin{tikzpicture} \footnotesize
+    \node[func] (ro) {\normalsize $\mathcal{F}_{RO}$};
+
+    \node[anchor=center, circle, fill=maincolor, text=backgroundcolor] at ([xshift = -4em, yshift = 3em]ro.west) (ctr) {$ctr$};
+    \node[anchor=center, circle, fill=maincolor, text=backgroundcolor] at ([xshift = -6em]ro.west) (w1) {$w_1$};
+    \node[anchor=center, circle, fill=maincolor, text=backgroundcolor] at ([xshift = -4em, yshift = -3em]ro.west) (w2) {$w_2$};
+
+    \draw[arrow] (ctr.south east) -- ([yshift = 1em]ro.west);
+    \draw[arrow] (w1.east) -- (ro.west);
+    \draw[arrow] (w2.north east) -- ([yshift = -1em]ro.west);
+
+    \node[maincolor, anchor = west] at ([xshift = 2em]ro.east) (result) {$u = H(ctr, w_1, w_2)$};
+    \draw[arrow] (ro.east) -- (result.west);
+
+    \node[maincolor, anchor = west] at ([xshift = 5em, yshift = 1.5em]result.east) (product1) {$\langle w_1, ctr, label\rangle$};
+    \node[maincolor, anchor = west] at ([xshift = 1em, yshift = 1em]product1.east) (protocol1) {$\Pi_1$};
+    \begin{scope}[on background layer]
+        \node[fit = (product1) (protocol1), fill = maincolor!30, rectangle, rounded corners, inner sep = .1em] (scope1) {};
+    \end{scope}
+    \node[maincolor, anchor = west] at ([xshift = 5em, yshift = -1.5em]result.east) (product2) {$\langle w_2, ctr, label\rangle$};
+    \node[maincolor, anchor = west] at ([xshift = 1em, yshift = -1em]product2.east) (protocol2) {$\Pi_2$};
+    \begin{scope}[on background layer]
+        \node[fit = (product2) (protocol2), fill = maincolor!30, rectangle, rounded corners, inner sep = .1em] (scope2) {};
+    \end{scope}
+
+    \draw[arrow] ([yshift = .25em]result.east) -- (product1.west) node[sloped, anchor=center, midway, above]{$u < T$};
+    \draw[arrow] ([yshift = -.25em]result.east) -- (product2.west) node[sloped, anchor=center, midway, below]{$[u]^R < T$};
+\end{tikzpicture}

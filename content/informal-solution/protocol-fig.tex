@@ -1,0 +1,47 @@
+\begin{tikzpicture}
+    \node[text=backgroundcolor, rectangle, rounded corners] (parties) {Protocol Participants};
+
+    \node[honestperson, anchor=north] at ([xshift=-.65in]parties.south) (party1) {};
+    \node[honestperson, anchor = west] at ([xshift = .1in]party1.east) (party2) {};
+    \node[honestperson, anchor = west] at ([xshift = .1in]party2.east) (party3) {};
+    \node[honestperson, anchor = west] at ([xshift = .1in]party3.east) (party4) {};
+    \node[corruptedperson, anchor = west] at ([xshift = .1in]party4.east) (party5) {};
+    \node[corruptedperson, anchor = west] at ([xshift = .1in]party5.east) (party6) {};
+
+    \begin{scope}[on background layer]
+        \node[fit = (parties) (party1), ellipse, fill=maincolor, inner sep = .1in] (protocolscope) {};
+    \end{scope}
+    \node[fill=backgroundcolor, text=maincolor, circle, anchor=center] at ([xshift = -.7in, yshift = .2in]protocolscope.center) {1};
+
+    \draw[thick, ->, >=stealth, color=maincolor, line width = .3em] ([xshift = -.1em, yshift = .5em]protocolscope.west) -- ([xshift = -8em, yshift = .5em]protocolscope.west);
+
+    \draw[thick, ->, >=stealth, color=maincolor, line width = .3em] ([xshift = -8em, yshift = -.5em]protocolscope.west) -- ([xshift = -.1em, yshift = -.5em]protocolscope.west) [xshift = -1em, yshift=-.2em] node[anchor=center, circle, near start, below, fill=maincolor, text=backgroundcolor]{4};
+
+    \node[honestpersonV2, anchor = north] at ([xshift = -5em, yshift = -1em]protocolscope.west) (incoming1) {};
+    \node[honestpersonV2, anchor = north] at ([xshift = -3.5em, yshift = -1em]protocolscope.west) (incoming2) {};
+    \node[corruptedperson, anchor = north] at ([xshift = -2em, yshift = -1em]protocolscope.west) (incoming3) {};
+    \node[honestpersonV2, anchor = south] at ([xshift = -5.5em, yshift = 1em]protocolscope.west) (outgoing1) {};
+    \node[honestpersonV2, anchor = south] at ([xshift = -4em, yshift = 1em]protocolscope.west) (outgoing2) {};
+    \node[corruptedperson, anchor = south] at ([xshift = -2.5em, yshift = 1em]protocolscope.west) (outgoing3) {};
+
+    \node[text=backgroundcolor, below right = 3em and 3em of protocolscope] (blockchain) {PoW Blockchain (Timekeeper)};
+
+    \node[smallblock, anchor=north] at ([xshift=-.65in]blockchain.south) (block1) {};
+    \foreach \x [count = \xi] in {2, 3, ..., 6}
+        {
+            \node[smallblock, anchor = west] at ([xshift = .1in]block\xi.east) (block\x) {};
+        }
+    \draw[thick, color=backgroundcolor] ([xshift = -.1in]block1.west) -- ([xshift = .1in]block6.east);
+
+    \begin{scope}[on background layer]
+        \node[fit = (blockchain) (block1), rectangle, rounded corners, fill=maincolor, inner sep = .1in] (blockchainscope) {};
+    \end{scope}
+
+    \draw[thick, ->, >=stealth, color=maincolor, line width = .3em] ([xshift = -1em]protocolscope.south) |- ([yshift = -.5em]blockchainscope.west)
+    [xshift=-.1em] node[anchor=center, midway, circle, left, fill=maincolor, text=backgroundcolor]{2};
+
+    \draw[thick, ->, >=stealth, color=maincolor, line width = .3em] ([yshift = .5em]blockchainscope.west) -| ([xshift = 1em]protocolscope.south) [xshift=.1em, yshift = 1.2em] node[anchor=center, midway, circle, right, fill=maincolor, text=backgroundcolor]{3};
+
+    \draw[thick, ->, >=stealth, color=maincolor, line width = .3em] ([yshift = .5em]protocolscope.east) -| ([xshift = 1em]blockchainscope.north) [xshift = -.04in] node[anchor=center, midway, circle, left, fill=maincolor, text=backgroundcolor]{5};
+    \draw[thick, ->, >=stealth, color=maincolor, line width = .3em] ([xshift = -1em]blockchainscope.north) |- ([yshift = -.5em]protocolscope.east) [xshift=.05in];
+\end{tikzpicture}

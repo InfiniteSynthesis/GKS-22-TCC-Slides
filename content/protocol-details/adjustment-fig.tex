@@ -1,0 +1,10 @@
+\begin{tikzpicture}
+    \node[block] (block1) {$\langle 1, 100 \rangle$};
+    \node[block, above right = 0cm and 2.5cm of block1] (block2) {$\langle 2, 108 \rangle$};
+    \node [anchor = west] at ([xshift = .5cm]block2.east) {Skip some rounds in the next interval.};
+    \node[block, below right = 0cm and 2.5cm of block1] (block3) {$\langle 2, 95 \rangle$};
+    \node [anchor = west,text width = 6cm] at ([xshift = .5cm]block3.east) {Set clock backward and continue with the rewound timestamp.};
+
+    \draw[arrow, maincolor] (block1) -- (block2.west) node[sloped, anchor=center, midway, above]{$\mathsf{shift} > 0$};
+    \draw[arrow, maincolor] (block1) -- (block3.west) node[sloped, anchor=center, midway, below]{$\mathsf{shift} < 0$};
+\end{tikzpicture}

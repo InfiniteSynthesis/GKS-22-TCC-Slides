@@ -1,0 +1,22 @@
+\tikzstyle{tbblock} = [rectangle, text=backgroundcolor, inner sep = .6em]
+
+\begin{tikzpicture}
+    \node[tbblock, fill=maincolor!70] (block1) {$\langle 1, 90 \rangle$};
+    \node[tbblock, fill=maincolor!70, anchor = west] at ([xshift = .25cm]block1.east) (block2) {{$\langle 1, 99 \rangle$}};
+    \node[tbblock, fill=maincolor!90, anchor = west] at ([xshift = .25cm]block2.east) (block3) {{$\langle 2, 95 \rangle$}};
+    \node[tbblock, fill=maincolor!90, anchor = west] at ([xshift = .25cm]block3.east) (block4) {{$\langle 2, 99 \rangle$}};
+    \node[tbblock, fill=maincolor!90, anchor = west] at ([xshift = .25cm]block4.east) (block5) {{$\langle 2, 108 \rangle$}};
+
+    \begin{scope}[on background layer]
+        \draw[thick, maincolor] ([xshift = -2em]block1.west) -- ([xshift = 2em]block5.east);
+    \end{scope}
+
+    \node[fill = maincolor!70, minimum width = 1em, minimum height = 1em, anchor = west] at ([xshift = 4em, yshift = .75em]block5.east) (note11) {};
+    \node[anchor = west] at ([xshift = 5.2em, yshift = .75em]block5.east)  (note12) {Blocks in interval 1};
+    \node[fill = maincolor!90, minimum width = 1em, minimum height = 1em, anchor = west] at ([xshift = 4em, yshift = -.75em]block5.east) (note21) {};
+    \node[anchor = west] at ([xshift = 5.2em, yshift = -.75em]block5.east)  (note22) {Blocks in interval 2};
+
+    \begin{scope}[on background layer]
+        \node[fit = (note11) (note22), draw = maincolor, rectangle, inner sep = .4em] (scope1) {};
+    \end{scope}
+\end{tikzpicture}

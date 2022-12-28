@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+    \node[tinyblock] (block1) {};
+    \foreach \x [count = \xi from 1] in {2, 3, ..., 6}
+        {
+            \node[tinyblock, anchor = west] at ([xshift = .25cm]block\xi.east) (block\x) {};
+        }
+
+    \draw[thick, densely dotted] ([xshift = .125cm, yshift = 1cm]block1.east) -- ([xshift = .125cm, yshift = -1cm]block1.east);
+    \draw[thick, densely dotted] ([xshift = .125cm, yshift = 1cm]block5.east) -- ([xshift = .125cm, yshift = -1cm]block5.east);
+
+    \node[anchor = north west] at ([xshift=.2cm, yshift = 1cm]block1.east) {Epoch $K$};
+    \node[anchor = north west] at ([xshift=.2cm, yshift = 1cm]block5.east) {Epoch $K'$};
+
+    \node[anchor=center] (exp) at ([yshift = -2em]block3.east) {$M$ rounds};
+    \draw[->] (exp.west) -- ([xshift = .125cm, yshift = -2em]block1.east);
+    \draw[->] (exp.east) -- ([xshift = .125cm, yshift = -2em]block5.east);
+
+    \begin{scope}[on background layer]
+        \draw[thick, maincolor] ([xshift = -.5cm]block1.west) -- ([xshift = .5cm]block6.east);
+    \end{scope}
+\end{tikzpicture}

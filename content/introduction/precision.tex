@@ -1,0 +1,17 @@
+\begin{tikzpicture}[line cap = rect, color = maincolor!80]
+    \filldraw [line width = 2.5pt, fill = maincolor!40] (0,0) circle [radius=1.2cm];
+    \foreach \angle [count = \xi] in {60, 30, ..., -270}
+        {
+            \draw[line width = 1pt] (\angle:1cm) -- (\angle:1.2cm);
+        }
+    \foreach \angle in {0, 90, 180, 270}
+        {
+            \draw[line width = 2pt] (\angle:0.9cm) -- (\angle:1.2cm);
+        }
+
+    \draw[line width = 1.5pt] (0,0) -- (145:0.5cm);
+    \draw[line width = 1.5pt] (0,0) -- (30:0.7cm);
+    \draw[->,line width = 1pt] (-1.4cm, 0) -- (-2.4cm, 0) node[left]{$T$};
+    \draw[->,line width = 1pt] (1.2cm, .6cm) -- (2.2cm, .8cm) node[right]{$T + \epsilon$};
+    \draw[->,line width = 1pt] (1.2cm, -.6cm) -- (2.2cm, -.8cm) node[right]{$T - \epsilon$};
+\end{tikzpicture}

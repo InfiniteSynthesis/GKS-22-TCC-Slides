@@ -1,0 +1,141 @@
+\section{Introduction}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Clocks in Distributed Systems
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Clocks in Distributed Systems}
+
+    \newcommand{\linearEnvelopeFootnote}
+    {
+        \footnote{\insertfootnotemark{A function $f:\mathbb{R}\rightarrow\mathbb{R}$  is within a $(U,L)$-linear envelope if and only if  it holds that $L\cdot  x \leq f(x)\leq U \cdot x$, for all $x$.}}
+    }
+
+    A set of $n$ processors ($t$ might be corrupted), with physical clocks within a linear envelope\linearEnvelopeFootnote of real time, should realize logical clocks that satisfy clock synchronization conditions.
+
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{.45\textwidth}<2-> \centering
+            \input{content/introduction/precision}
+        \end{column}
+        \begin{column}{.45\textwidth}<3-> \centering
+            \input{content/introduction/accuracy}
+        \end{column}
+    \end{columns}
+
+    \begin{columns}[c, onlytextwidth] \footnotesize
+        \begin{column}[t]{.45\textwidth}<2-> \centering
+            \emph{Precision} \linebreak Honest parties maintain close logical clocks. \linebreak (Bounded skew)
+        \end{column}
+        \begin{column}[t]{.45\textwidth}<3-> \centering
+            \emph{Accuracy} \linebreak Honest parties report logical time within a linear envelope of the real time.
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Classical Clock Synchronization Protocols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Classical Clock Synchronization Protocols}
+
+    This problem has been studied for over 40 years \cite{DBLP:journals/cacm/Lamport78,byzantine-clock-synchronization,fault-tolerant-clock-synchronization,DBLP:journals/jcss/DolevHS86,DBLP:journals/jacm/SrikanthT87,WELCH19881,DBLP:conf/fc/AbrahamDDN019,podc22}.
+
+    \begin{itemize}
+        \okitem<2-> Optimal skew: $\approx$ transmission uncertainty when \# of parties is large.
+        \okitem<2-> Optimal linear envelope: as good as the linear envelope on physical clocks.
+        \item<3-> ``Permissioned'' environment.
+    \end{itemize}
+
+    \footcite{DBLP:journals/cacm/Lamport78}
+    \footcite{byzantine-clock-synchronization}
+    \footcite{fault-tolerant-clock-synchronization}
+    \footcite{DBLP:journals/jcss/DolevHS86}
+    \footcite{DBLP:journals/jacm/SrikanthT87}
+    \footcite{WELCH19881}
+    \footcite{DBLP:conf/fc/AbrahamDDN019}
+    \footcite{podc22}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Permissionless Protocols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Permissionless Protocols}
+
+    These classical synchronization protocols are challenged by a permissionless environment.
+
+    \uncover<2->{ \input{content/introduction/comparison-table} }
+
+    \begin{itemize}
+        \item<3-> Permissionless protocols can no longer use $n$ and $t$ in the protocol logic.
+            \thusitem<4-> Almost all existing protocols will not work (cf. Ouroboros Chronos \cite*[Eurocrypt '21]{ouroboros-chronos}).
+    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Clocks in Bitcoin
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Clocks in Bitcoin}
+
+    \tikzstyle{sourceBox} = [draw = maincolor, color = maincolor, line width =.1em, rectangle, inner sep = .5em, anchor = west]
+
+    Bitcoin miners adjust their time based on three different sources\footnote{\insertfootnotemark If the first two sources disagree, the program will ask for the third.}:
+
+    \begin{center}
+        \begin{tikzpicture}
+            \node[sourceBox] (s1) {Local system clock};
+            \node[sourceBox] at ([xshift = 5em]s1.east) (s2) {Median peer clocks};
+            \node[sourceBox] at ([xshift = 5em]s2.east) (s3) {Human operator};
+        \end{tikzpicture}
+    \end{center}
+
+    \begin{itemize}
+        \item<2-> System clocks are usually adjusted via NTP. (single point failure)
+        \item<3-> In Bitcoin protocol, some amount of deviation (70min~\textasciitilde~2h) is allowed.
+        \item<4-> Many blocks in Bitcoin report timestamp smaller than its parent.
+            \thusitem<5-> Clocks in Bitcoin network are not synchronized.
+    \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Related Work
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Related Work}
+
+    \begin{itemize}
+        \item<1-> Having access to synchronized clocks is an essential feature in Nakamoto Consensus, which is reflected in previous analyses \cite{GKL15,DBLP:conf/eurocrypt/PassSS17,GKL17,bitcoin-uc-analysis}.
+            \okitem<2-> \Emph{Ouroboros Chronos} \cite{ouroboros-chronos} is the first permissionless \emph{Proof-of-Stake} clock synchronization protocol.
+            \ngitem<3-> The construction from Ouroboros Chronos, when applied in \emph{Proof-of-Work} context, will eventually become insecure when there is a steady increase (or decrease) of participants.
+    \end{itemize}
+
+    \footcite{GKL15}
+    \footcite{DBLP:conf/eurocrypt/PassSS17}
+    \footcite{GKL17}
+    \footcite{bitcoin-uc-analysis}
+    \footciteAnimation{ouroboros-chronos}{2}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Our Results
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Our Results}
+
+    \begin{quote}
+        Is it possible for a dynamically changing population of peers to synchronize their clocks utilizing only a public setup and assuming PoW?
+    \end{quote}
+
+    \vspace*{.1in}
+
+    \begin{quote}
+        Is there a blockchain protocol in the PoW setting that has no dependency on a publicly accessible global clock?
+    \end{quote}
+
+    \vspace*{.2in}
+
+    \uncover<2->{
+        \Emph{Main Theorem (informal).} A new PoW-based protocol ($\mathsf{Timekeeper}$) solves the permissionless clock synchronization problem assuming \emph{bounded dynamic participation} and \emph{honest majority} in terms of random oracle queries.
+    }
+\end{frame}

@@ -1,0 +1,32 @@
+\renewcommand\tabularxcolumn[1]{m{#1}}
+
+\begin{table}[ht] \centering \footnotesize \setlength{\arrayrulewidth}{0.4mm} \arrayrulecolor{backgroundcolor}
+    \begin{tabularx}{0.8\textwidth}{
+        >{\columncolor{maincolor!30}\centering\let\newline          \\\arraybackslash\hspace{0pt}}m{0.2\textwidth} |
+        >{\columncolor{maincolor!30}\centering\arraybackslash}X |
+        >{\columncolor{maincolor!30}\centering\arraybackslash}X
+        }
+        \rowcolor{maincolor!70}
+        \hline
+        \textbf{Model}
+         & \textbf{Prior}
+         & \textbf{Permissionless}
+        \\ \hline
+        \# of parties
+         & Fixed
+         & Dynamic
+        \\ \hline
+        Online assumption
+         & Always active
+         & Unannounced disappearance
+        \\ \hline
+        Setup
+         & PKI
+         & CRS, Proof-of-Work; \linebreak Proof-of-Stake
+        \\ \hline
+        Joining process
+         & Upon approval from sufficiently many participants
+         & Passive bootstrapping. \linebreak (No need for approval)
+        \\ \hline
+    \end{tabularx}
+\end{table}

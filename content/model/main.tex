@@ -1,0 +1,71 @@
+\section{Model}
+
+\input{content/model/model-fig}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Imperfect Clocks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Imperfect Clocks}
+
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.6\textwidth} \centering \modelFig{, ignore}{}{} \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{itemize}
+                \item Imperfect clock forwards ``nominal time'' after all honest clocks have ``ping'' it \cite{uc-synchronous-clock}.
+                \item Adversary can set additional drifts to honest clocks \cite{ouroboros-chronos}.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \begin{center}
+        Honest parties cannot learn the exact time, but can proceed at ``roughly'' the same speed.
+    \end{center}
+
+    \footcite{uc-synchronous-clock}
+    \footcite{ouroboros-chronos}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Random Oracle and its Wrapper
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Random Oracle and its Wrapper}
+
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.6\textwidth} \centering \modelFig{}{, ignore}{} \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{itemize}
+                \item Random oracle wrapper limits the adversary's power to make queries \cite{bitcoin-uc-analysis,resource-restricted-mpc}.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \begin{center}
+        We define \emph{honest majority} with respect to the random oracle queries in terms of the nominal time.
+    \end{center}
+
+    \footcite{bitcoin-uc-analysis}
+    \footcite{resource-restricted-mpc}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Common Reference String
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Common Reference String}
+
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.6\textwidth} \centering \modelFig{}{}{, ignore} \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{itemize}
+                \item Adversary has unlimited (but polynominally bounded) power to make RO queries before CRS is retrieved.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \begin{center}
+        We model the public setup via common reference string.
+    \end{center}
+    \vspace*{2.7em}
+\end{frame}

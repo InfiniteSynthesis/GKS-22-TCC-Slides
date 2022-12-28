@@ -1,0 +1,31 @@
+\usetikzlibrary{backgrounds,fit,automata,positioning,shapes.geometric}
+
+% \definecolor{backgroundcolor}{HTML}{DDDDFF}
+% \definecolor{textcolor}{HTML}{000000}
+% \definecolor{maincolor}{HTML}{3344AA}
+% \definecolor{accentcolor}{HTML}{00AABB}
+
+\definecolor{honestcolor}{HTML}{009B55}
+
+\tikzstyle{func} = [fill=maincolor, rectangle, rounded corners, minimum height=1cm, minimum width=2cm, text=backgroundcolor]
+\tikzstyle{party} = [ellipse, minimum height=1cm, minimum width=2cm, text centered, text=backgroundcolor]
+\tikzstyle{arrow} = [thick,->,>=stealth,maincolor]
+\tikzstyle{ignore} = [opacity = .3]
+
+% informal solution fig
+\tikzstyle{smallblock} = [rectangle, fill = backgroundcolor, minimum size = .15in]
+\tikzstyle{honestperson} = [bob, hair = backgroundcolor, skin = backgroundcolor, shirt = backgroundcolor, undershirt = backgroundcolor]
+\tikzstyle{honestpersonV2} = [bob, hair = maincolor, skin = maincolor, shirt = maincolor, undershirt = maincolor]
+\tikzstyle{corruptedperson} = [devil, hair = red, skin = red, shirt = red]
+
+% protocol details
+\tikzstyle{tinyblock} = [rectangle, fill=maincolor!80, text=backgroundcolor, minimum height=.75cm, minimum width=.75cm]
+
+\newcommand{\thankyoupage}{
+    \section*{}
+    \begin{frame}
+        \begin{center}
+            \color{maincolor} \Huge \bf Thank You
+        \end{center}
+    \end{frame}
+}
